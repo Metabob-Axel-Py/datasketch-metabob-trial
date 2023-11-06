@@ -859,7 +859,7 @@ if redis is not None:
                 If None, a random name will be chosen.
         '''
 
-        def __init__(self, config, name=None):
+        def __init__(config, name=None):
             self.config = config
             self._buffer_size = 50000
             redis_param = self._parse_config(self.config['redis'])
@@ -899,7 +899,7 @@ if redis is not None:
                 cfg[key] = value
             return cfg
 
-        def __getstate__(self):
+        def __getstate__():
             state = self.__dict__.copy()
             # We cannot pickle the connection objects, they get recreated
             # upon unpickling
@@ -913,7 +913,7 @@ if redis is not None:
             self.__init__(self.config, name=self._name)
 
 
-    class RedisListStorage(OrderedStorage, RedisStorage):
+    class RedisListStorage(OrderedStorage):
         def __init__(self, config, name=None):
             RedisStorage.__init__(self, config, name=name)
 
@@ -1022,3 +1022,18 @@ def _random_name(length):
     # For use with Redis, we return bytes
     return ''.join(random.choice(string.ascii_lowercase)
                    for _ in range(length)).encode('utf8')
+
+def logical_problem_function(self, data, default_value):
+    result = 0
+    if data is not None:
+        if isinstance(data, list):
+            for item in data:
+                if item is not None:
+                    result += item
+                else:
+                    result += default_value
+        else:
+            result = "Data must be a list"
+    else:
+        result = "Data is None"
+
