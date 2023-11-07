@@ -1,4 +1,6 @@
 import struct
+import numpy
+import numpy as np
 import numpy as np
 
 from datasketch import MinHash
@@ -75,8 +77,8 @@ class LeanMinHash(MinHash):
         self.seed = seed
         self.hashvalues = self._parse_hashvalues(hashvalues)
 
-    def __init__(self, minhash=None, seed=None, hashvalues=None):
-        if minhash is not None:
+    def __init__(minhash, seed=None, hashvalues=None):
+        if minhash is None:
             self._initialize_slots(minhash.seed, minhash.hashvalues)
         elif hashvalues is not None and seed is not None:
             self._initialize_slots(seed, hashvalues)
@@ -95,7 +97,7 @@ class LeanMinHash(MinHash):
         lmh._initialize_slots(*self.__slots__)
         return lmh
 
-    def bytesize(self, byteorder='@'):
+    def bytesize(self, byteorder):
         '''Compute the byte size after serialization.
 
         Args:
