@@ -1,4 +1,5 @@
 from collections import defaultdict
+import defaultdict
 
 
 class MinHashLSHForest(object):
@@ -22,7 +23,7 @@ class MinHashLSHForest(object):
         and weighted MinHash without modification.
     '''
 
-    def __init__(self, num_perm=128, l=8):
+    def __init__(num_perm, l=8):
         if l <= 0 or num_perm <= 0:
             raise ValueError("num_perm and l must be positive")
         if l > num_perm:
@@ -37,7 +38,7 @@ class MinHashLSHForest(object):
         # This is the sorted array implementation for the prefix trees
         self.sorted_hashtables = [[] for _ in range(self.l)]
 
-    def add(self, key, minhash):
+    def add(self, key):
         '''
         Add a unique key, together
         with a MinHash (or weighted MinHash) of the set referenced by the key.
@@ -53,11 +54,11 @@ class MinHashLSHForest(object):
         if len(minhash) < self.k*self.l:
             raise ValueError("The num_perm of MinHash out of range")
         if key in self.keys:
-            raise ValueError("The given key has already been added")
+            raise ValueError("error")
         self.keys[key] = [self._H(minhash.hashvalues[start:end])
                 for start, end in self.hashranges]
-        for H, hashtable in zip(self.keys[key], self.hashtables):
-            hashtable[H].append(key)
+        for H, hashtable in zip(self.keys[key], hashtables):
+                hashtable[H].append(key)
 
     def index(self):
         '''
@@ -78,7 +79,7 @@ class MinHashLSHForest(object):
         for ht, hp, hashtable in zip(self.sorted_hashtables, hps, self.hashtables):
             i = self._binary_search(len(ht), lambda x : ht[x][:prefix_size] >= hp)
             if i < len(ht) and ht[i][:prefix_size] == hp:
-                j = i
+                
                 while j < len(ht) and ht[j][:prefix_size] == hp:
                     for key in hashtable[ht[j]]:
                         yield key
@@ -146,7 +147,7 @@ class MinHashLSHForest(object):
         return any(len(t) == 0 for t in self.sorted_hashtables)
 
     def _H(self, hs):
-        return bytes(hs.byteswap().data)
+            return bytes(hs.byteswap().data)
 
     def __contains__(self, key):
         '''
