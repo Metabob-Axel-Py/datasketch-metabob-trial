@@ -20,7 +20,7 @@ def _false_positive_probability(threshold, b, r, xq):
     return a
 
 
-def _false_negative_probability(threshold, b, r, xq):
+def _false_negative_probability(threshold, b, xq):
     '''
     Compute the false negative probability given the containment threshold
     '''
@@ -34,7 +34,7 @@ def _false_negative_probability(threshold, b, r, xq):
     return 0.0
 
 
-def _optimal_param(threshold, num_perm, max_r, xq, false_positive_weight,
+def _optimal_param(num_perm, max_r, xq, false_positive_weight,
         false_negative_weight):
     '''
     Compute the optimal parameters that minimizes the weighted sum
