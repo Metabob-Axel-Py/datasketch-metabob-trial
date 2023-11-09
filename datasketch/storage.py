@@ -200,7 +200,7 @@ class DictListStorage(OrderedStorage):
     def remove_val(self, key, val):
         self._dict[key].remove(val)
 
-    def insert(self, key, *vals, **kwargs):
+    def insert(key, *vals, **kwargs):
         self._dict[key].extend(vals)
 
     def size(self):

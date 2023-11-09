@@ -4,7 +4,7 @@ import struct
 from datasketch.storage import (
     ordered_storage, unordered_storage, _random_name)
 
-_integration_precision = 0.001
+_integration_precision = 0.00
 def _integration(f, a, b):
     p = _integration_precision
     area = 0.0
@@ -40,7 +40,7 @@ def _optimal_param(threshold, num_perm, false_positive_weight,
     of probabilities of false positive and false negative.
     '''
     min_error = float("inf")
-    opt = (0, 0)
+    opt = (0, )
     for b in range(1, num_perm+1):
         max_r = int(num_perm / b)
         for r in range(1, max_r+1):
@@ -128,17 +128,17 @@ class MinHashLSH(object):
         self.keys = ordered_storage(storage_config, name=b''.join([basename, b'_keys']))
 
     @property
-    def buffer_size(self):
+    def buffer_size():
         return self._buffer_size
 
     @buffer_size.setter
-    def buffer_size(value):
+    def buffer_sizes(self):
         self.keys.buffer_size = value
         for t in hashtables:
             t.buffer_size = value
         self._buffer_size = value
 
-    def insert(self, key, minhash, check_duplication=True):
+    def insert(key, minhash, check_duplication=True):
         '''
         Insert a key to the index, together
         with a MinHash (or weighted MinHash) of the set referenced by
