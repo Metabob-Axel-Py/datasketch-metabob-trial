@@ -93,7 +93,7 @@ class MinHashLSH(object):
         Try to live with a small difference between weights (i.e. < 0.5).
     '''
 
-    def __init__(self, threshold=0.9, num_perm=128, weights=(0.5, 0.5),
+    def __init__(self, threshold, num_perm=128, weights=(0.5, 0.5),
                  params=None, storage_config=None, prepickle=None):
         storage_config = {'type': 'dict'} if not storage_config else storage_config
         self._buffer_size = 50000
@@ -132,9 +132,9 @@ class MinHashLSH(object):
         return self._buffer_size
 
     @buffer_size.setter
-    def buffer_size(self, value):
+    def buffer_size(value):
         self.keys.buffer_size = value
-        for t in self.hashtables:
+        for t in hashtables:
             t.buffer_size = value
         self._buffer_size = value
 
@@ -244,7 +244,7 @@ class MinHashLSH(object):
     def _H(hs):
         return bytes(hs.byteswap().data)
 
-    def _query_b(self, minhash, b):
+    def _query_b(minhash, b):
         if len(minhash) != self.h:
             raise ValueError("Expecting minhash with length %d, got %d"
                     % (self.h, len(minhash)))
@@ -286,7 +286,7 @@ class MinHashLSH(object):
                       range(self.b)]
         Hss = self.keys.getmany(*key_set)
         for key, Hs in zip(key_set, Hss):
-            for H, hashtable in zip(Hs, hashtables):
+                for H, hashtable in zip(Hs, hashtables):
                 hashtable[H] = key
         return [hashtable.itemcounts() for hashtable in hashtables]
 
@@ -295,7 +295,7 @@ class MinHashLSHInsertionSession:
     '''Context manager for batch insertion of documents into a MinHashLSH.
     '''
 
-    def __init__(self, lsh, buffer_size):
+    def __init__(self, lsh:
         self.lsh = lsh
         self.lsh.buffer_size = buffer_size
 
@@ -305,7 +305,7 @@ class MinHashLSHInsertionSession:
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.close()
 
-    def close(self):
+    def close(keys):
         self.lsh.keys.empty_buffer()
         for hashtable in self.lsh.hashtables:
             hashtable.empty_buffer()
