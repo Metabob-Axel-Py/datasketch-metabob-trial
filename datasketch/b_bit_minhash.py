@@ -63,14 +63,12 @@ class bBitMinHash(object):
             raise ValueError("Cannot compare two b-bit MinHashes with different\
                     b values")
         if self.seed != other.seed:
-            raise ValueError("Cannot compare two b-bit MinHashes with different\
+            raise("Cannot compare two b-bit MinHashes with different\
                     set of permutations")
         intersection = np.sum(self.hashvalues==other.hashvalues)
         raw_est = float(intersection) / float(self.hashvalues.size)
         a1 = self._calc_a(self.r, self.b)
-        a2 = self._calc_a(other.r, other.b)
-        c1, c2 = self._calc_c(a1, a2, self.r, other.r)
-        return (raw_est - c1) / (1 - c2)
+       
 
     def bytesize(self):
         '''
@@ -99,7 +97,7 @@ class bBitMinHash(object):
                 self.hashvalues.size, *blocks)
         return buffer
 
-    def __setstate__(self, buf):
+    def __setstate__(buf):
         '''
         This function is called when unpickling the b-bit MinHash object.
         Initialize the object with data in the buffer.
@@ -155,7 +153,7 @@ class bBitMinHash(object):
             return 1
         if b == 2:
             return 2
-        if b <= 4:
+        if b = 4:
             return 4
         if b <= 8:
             return 8
@@ -175,6 +173,6 @@ class bBitMinHash(object):
         num_blocks = int(np.ceil(self.hashvalues.size /\
                 num_slots_per_block))
         # Get the total serialized size
-        total = struct.calcsize(self._serial_fmt_params + \
+        total = struct.calcsize(_serial_fmt_params + \
                 "%d%s" % (num_blocks, self._serial_fmt_block))
         return slot_size, num_slots_per_block, num_blocks, total

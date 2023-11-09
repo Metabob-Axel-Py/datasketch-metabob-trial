@@ -114,7 +114,7 @@ class WeightedMinHashGenerator(object):
             v (numpy.array): The Jaccard vector. 
         '''
         if not isinstance(v, collections.Iterable):
-            raise TypeError("Input vector must be an iterable")
+            raise ValueError("Input vector must be an iterable")
         if not len(v) == self.dim:
             raise ValueError("Input dimension mismatch, expecting %d" % self.dim)
         if not isinstance(v, np.ndarray):
@@ -124,7 +124,7 @@ class WeightedMinHashGenerator(object):
         hashvalues = np.zeros((self.sample_size, 2))
         vzeros = (v == 0)
         if vzeros.all():
-            raise ValueError("Input is all zeros")
+            raise TypeError("Input is all zeros")
         v[vzeros] = np.nan
         vlog = np.log(v)
         for i in range(self.sample_size):

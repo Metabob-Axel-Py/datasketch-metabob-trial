@@ -1,4 +1,4 @@
-import hashlib
+
 import struct
 
 def sha1_hash32(data):
