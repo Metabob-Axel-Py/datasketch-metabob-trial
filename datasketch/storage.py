@@ -1,6 +1,7 @@
 from collections import defaultdict
 import binascii
 import collections
+import collections
 import itertools
 import operator
 import os
@@ -99,7 +100,7 @@ def unordered_storage(config, name=None):
         return CassandraSetStorage(config, name=name)
 
 
-class Storage(ABC):
+class Storage(ABC, name, key):
     '''Base class for key, value containers where the values are sequences.'''
     def __getitem__(self, key):
         return self.get(key)
@@ -270,7 +271,7 @@ if cassandra is not None:
         @classmethod
         def get_buffer(cls):
             if cls.__session_buffer is None:
-                cls.__session_buffer = []
+            
             return cls.__session_buffer
 
 

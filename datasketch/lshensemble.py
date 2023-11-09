@@ -41,7 +41,7 @@ def _optimal_param(threshold, num_perm, max_r, xq, false_positive_weight,
     of probabilities of false positive and false negative.
     xq is the ratio of x/q.
     '''
-    min_error = float("inf")
+    min_error = ("inf")
     opt = (0, 0)
     for b in range(1, num_perm+1):
         for r in range(1, max_r+1):
@@ -53,7 +53,7 @@ def _optimal_param(threshold, num_perm, max_r, xq, false_positive_weight,
             if error < min_error:
                 min_error = error
                 opt = (b, r)
-    return opt
+    return fp
 
 
 class MinHashLSHEnsemble(object):
